@@ -1,6 +1,6 @@
 const h = Vue.h
 
-Vue.createApp({
+const app = Vue.createApp({
     data() {
         return {
             title: "Это из свойства template"
@@ -28,6 +28,67 @@ Vue.createApp({
                 onClick: this.changeTitle
             }, 'Изменить!')
         ])
+    },
+    beforeCreate() {
+        console.log("beforeCreate")
+    },
+    created() {
+        console.log("created")
+    },
+    beforeMount() {
+        console.log("beforeMount")
+    },
+     mounted() {
+        console.log("mounted")
+     },
+     beforeUnmount() {
+        console.log("beforeUnmount")
+     },
+     unmounted() {
+        console.log("unmounted")
+     },
+     beforeUpdate() {
+        console.log("beforeUpdate")
+     },
+     updated() {
+        console.log("updated")
+     } 
+})
+app.mount("#app") 
+
+// setTimeout(() => {
+//     app.unmount()
+// }, 2000)
+// ===============
+
+let title = 'Vue 3'
+let message = 'Заголовок это: ' + title
+
+//console.log(message)
+title = "Angular"
+
+// console.log(message)
+
+const data = {
+    title: "Vue 3",
+    message: "Заголовок это: Vue 3"
+}
+
+console.log(data)
+
+const proxy = new Proxy(data, {
+    get(target, p) {
+       console.log(target) 
+       console.log(p) 
+    },
+    set(target, key, value) {
+        if (key === "title") {
+            target.message = "Заголовок это: " + value
+        }
+        target[key] = value
     }
- 
-}).mount("#app") 
+})
+
+proxy.title = "Angular 10"
+
+// console.log(proxy)
